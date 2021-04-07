@@ -16,11 +16,20 @@ const onClickAdd = () => {
   const p = document.createElement("p");
   p.innerText = inputText;
 
+  //button(戻す)タグ作成
+  const backButton = document.createElement("button");
+  backButton.innerText = "戻す";
+  backButton.addEventListener("click", () => {
+    moveElement([backButton], [completeButton, deleteButton]);
+    document.getElementById("incomplete-list").appendChild(li);
+  });
+
   //button(完了)タグ生成
   const completeButton = document.createElement("button");
   completeButton.innerText = "完了";
   completeButton.addEventListener("click", () => {
-    alert("完了");
+    moveElement([completeButton, deleteButton], [backButton]);
+    document.getElementById("complete-list").appendChild(li);
   });
 
   //button(削除)タグ生成
@@ -31,6 +40,12 @@ const onClickAdd = () => {
     const deleteTaret = deleteButton.closest("li");
     document.getElementById("incomplete-list").removeChild(deleteTaret);
   });
+
+  //moveElement(削除する要素の配列, divの子要素に入れる要素の配列)
+  const moveElement = (deleteItems, createItems) => {
+    deleteItems.forEach((deleteItem) => deleteItem.remove());
+    createItems.forEach((createItem) => div.appendChild(createItem));
+  };
 
   //divタグの子要素にpタグを設定
   div.appendChild(p);
